@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="../common.css" type="text/css">
+  <meta name="viewport" content="width=device-width,user-scalable=no"> 
+  <style> 
+
+  #screen_Start {
+  	display: inline;	
+  }  
+  #screen_Debug {
+  	display: inline;	
+	color:#999999;
+  }
+  
+  #screen_AppContent {
+  	display: none;	
+  }
+  
+  #screen_DateForm {
+  	display: none;	
+  }
+  
+  #ball {
+  	position:absolute;
+  	top: 0px;
+  	left: 0px;
+  }
+  </style> 
+<script type="text/javascript">
+
+	var currentDate = new Date();
+	var dueDate = new Date();
+	dataValue = null;
+	
+	var one_week=1000*60*60*24*7;
+	
+	function setit() {
+		var input = document.getElementById( 'dueDate' ).value;
+		dueDate = new Date( input );
+		dataValue = dueDate;
+		localStorage.setItem("string_key", dataValue);
+		//document.getElementById("output1").innerHTML = "Set string value: " + dataValue;
+		calculateWeeks();
+	}
+	function nullit() {
+		localStorage.setItem("string_key", null);
+		//document.getElementById("output1").innerHTML =  "Set string value to null.";
+		dataValue = null;
+	}
+	
+	function getit() {
+		dataValue = localStorage.getItem("string_key"); 
+		//document.getElementById("output1").innerHTML = "Got string value: " + dataValue; 
+	}
+	
+	function onBeginClick() {
+		document.getElementById("screen_Start").style.display = 'none';
+		getit();
+		if(dataValue.toString()=="null"){
+			//document.getElementById("output2").innerHTML = "Enter a Date:";
+			document.getElementById("screen_DateForm").style.display = 'inline';
+			document.getElementById("screen_AppContent").style.display = 'none';
+		}else{
+			//document.getElementById("output2").innerHTML = "Date Already Saved";
+			calculateWeeks();
+		}
+	}
+	
+	function calculateWeeks() {
+		var weeksPreg = Math.ceil((dueDate.getTime()-currentDate.getTime())/(one_week));
+		weeksPreg = 40-weeksPreg;
+		var o1 = document.getElementById("result1");
+		o1.value = weeksPreg;	
+		if(weeksPreg<=0){
+			//not yet
+		}
+		if((weeksPreg>=1)&&(weeksPreg<=6)){
+			weeksPreg = 6;
+			window.location.href = "content.html?+weeksPreg="+weeksPreg;
+			//document.getElementById("screen_DateForm").style.display = 'none';	
+			//document.getElementById("screen_AppContent").style.display = 'inline';	
+		}
+		if((weeksPreg>=5)&&(weeksPreg<=39)){
+
+			window.location.href = "content.html?+weeksPreg="+weeksPreg;
+			//document.getElementById("screen_DateForm").style.display = 'none';	
+			//document.getElementById("screen_AppContent").style.display = 'inline';		
+		}	
+		if((weeksPreg>=40)&&(weeksPreg<=42)){
+			weeksPreg =40;
+			window.location.href = "content.html?+weeksPreg="+weeksPreg;
+			//document.getElementById("screen_DateForm").style.display = 'none';	
+			//document.getElementById("screen_AppContent").style.display = 'inline';		
+		}
+		if(weeksPreg>42){
+			//try again
+		}
+		if(isNaN(weeksPreg)==true){
+			//no date entered
+			//DO NOTHING
+		}
+    }
+
+
+</script>
+</head>
+<body>
+<div id="screen_Start">
+<p>
+  --------------<br>
+  <input type="button" value="BEGIN" onclick="onBeginClick()" />
+</p>
+</div>
+
+
+<p><br>
+<div id="screen_DateForm">
+  --------------<br>
+    </p>Enter a date:
+    <p>  <input type="date" name="dueDate"m id="dueDate" min="2013-12-02"></p>
+    <p>&nbsp;</p>
+    <p>
+    <button onclick="setit()">Save Date</button></p>
+    <p></p>
+</div>
+
+<br>
+<br>
+
+<div id="screen_Debug">
+
+  --------------
+</p>
+<p>Weeks Preg:
+  <output name="result1" id="result1" for="d1"></output></p>
+<p> 
+<p>debug reset:
+  <input type="button" value="null" onclick="nullit()" />
+</p>
+</div>
+<p>&nbsp;</p>
+</body>
+</html>

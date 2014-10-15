@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="../common.css" type="text/css">
+  <meta name="viewport" content="width=device-width,user-scalable=no"> 
+  <style> 
+
+  #screen_AppContent {
+  	display: inline;	
+  }
+  
+  #ball {
+  	position:absolute;
+  	top: 0px;
+  	left: 0px;
+  }
+  </style> 
+<script type="text/javascript">
+	// Position Variables
+  var x = 500;
+  var y = 500;
+  var curRot = 0;
+   
+  // Speed - Velocity
+  var vx = 0;
+  var vy = 0;
+   
+  // Acceleration
+  var ax = 0;
+  var ay = 0;
+   
+  var delay = 10;
+  var vMultiplier = 0.01;
+  
+  var oldX;
+  var oldY;
+  var speed;
+  
+  window.onload = function() {
+    if (window.DeviceMotionEvent==undefined) {
+    	document.getElementById("no").style.display="block";
+    	document.getElementById("yes").style.display="none";
+     
+    } else {
+    	window.ondevicemotion = function(event) {
+    	 
+    		ax = event.accelerationIncludingGravity.x;
+    		ay = event.accelerationIncludingGravity.y;
+    	}
+     
+    	setInterval(function() {	
+			oldX = x;
+			oldY = y;
+    		vy = vy + -(ay);
+    		vx = vx + ax;
+     
+    		var ball = document.getElementById("ball");
+			var ballWidth = ball.clientWidth;
+			
+    		y = parseInt(y + vy * vMultiplier);
+    		x = parseInt(x + vx * vMultiplier);
+    		var edge = ballWidth*.2;
+    		if (x<-edge) { x = -edge; vx = (vx*-1)*.5; }
+    		if (y<-edge) { y = -edge; vy = (vy*-1)*.5; }
+			
+    		if (x>document.documentElement.clientWidth-ballWidth+edge) {
+				 x = document.documentElement.clientWidth-ballWidth+edge; vx = (vx*-1)*.5; 
+			}
+    		if (y>document.documentElement.clientHeight-ballWidth+edge) { 
+				y = document.documentElement.clientHeight-ballWidth+edge; vy = (vy*-1)*.5; 
+			}
+    		
+			speed = getDistance(oldX, oldY, x, y);
+
+    		ball.style.top = y + "px";
+    		ball.style.left = x + "px";
+			curRot+=speed;
+			Rotate(img, curRot);
+			var o1 = document.getElementById("result1");
+			o1.value = speed;	
+			//	document.getElementById("pos").innerHTML = "x=" + x + "<br />y=" + y + "<br />speed=" + y;
+    	}, delay);
+    } 
+  };
+
+// var imageNames = ["temp1", "temp1", "temp1"]; 
+ 
+var img = document.createElement("img");
+img.onload = function(e) {
+	var container = document.getElementById("ball");
+	container.appendChild(e.target);
+}
+img.setAttribute("src","images/temp"+2+".svg");
+
+Rotate(img, 45);
+
+function Rotate(elem,deg){
+
+    var Dx;
+    var Dy;
+    var iecos;
+    var iesin;
+    var halfWidth;
+    var halfHeight;
+    var dummy;
+    
+    //degrees to radians  q
+    var rad=deg*(Math.PI/180);
+    
+    //get sine and cosine of rotation angle
+    iecos=Math.cos(rad);
+    iesin=Math.sin(rad);
+    
+    //get element's size
+    halfWidth=elem.offsetWidth/2;
+    halfHeight=elem.offsetHeight/2;
+    
+    //calculating position correction values
+    Dx=-halfWidth*iecos + halfHeight*iesin + halfWidth;
+    Dy=-halfWidth*iesin - halfHeight*iecos + halfHeight;
+
+    //applying CSS3 rotation
+    elem.style.transform="rotate("+rad+"rad)";
+    
+    //vendor prefixed rotations
+    elem.style.mozTransform="rotate("+rad+"rad)";
+    elem.style.webkitTransform="rotate("+rad+"rad)";
+    elem.style.OTransform="rotate("+rad+"rad)";
+    elem.style.msTransform="rotate("+rad+"rad)";
+    
+    //rotation Matrix for IExplorer
+    elem.style.filter="progid:DXImageTransform.Microsoft.Matrix(M11="+iecos+", M12="+-iesin+", M21="+iesin+", M22="+iecos+", Dx="+Dx+", Dy="+Dy+", SizingMethod=auto expand)";
+    elem.style.msFilter="progid:DXImageTransform.Microsoft.Matrix(M11="+iecos+", M12="+-iesin+", M21="+iesin+", M22="+iecos+", Dx="+Dx+", Dy="+Dy+", SizingMethod=auto expand)";
+
+    //Fixing black box issue on IE9
+    dummy=document.createElement("div");
+    dummy.innerHTML='';
+    if(dummy.getElementsByTagName("br").length==1) elem.style.filter="none";
+    delete dummy;
+    
+}
+
+function getDistance(p1x, p1y, p2x, p2y){
+	var xs = 0;
+	var ys = 0;
+	 
+	xs = p2x - p1x;
+	xs = xs * xs;
+	 
+	ys = p2y - p1y;
+	ys = ys * ys;
+	 
+	return Math.sqrt( xs + ys );
+}
+
+</script>
+</head>
+<body>
+<div id="screen_AppContent">
+  <output name="result1" id="result1" for="d1"></output></p>
+      <div id="ball">
+      </div> 
+</div>
+<br>
+<br>
+
+<p>&nbsp;</p>
+</body>
+</html>

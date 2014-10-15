@@ -1,0 +1,38 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100">
+<defs>
+<g id="Layer1_0_FILL">
+<path fill="#FF0000" stroke="none" d="
+M 85.3 85.35
+Q 100 70.7 100 50 100 29.3 85.3 14.65 70.7 0 50 0 29.25 0 14.6 14.65 0 29.3 0 50 0 70.7 14.6 85.35 29.25 100 50 100 70.7 100 85.3 85.35 Z"/>
+</g>
+
+<font horiz-adv-x="2048">
+<!--  Font Name: Arial
+Vendor ID: TMC 
+© 2006 The Monotype Corporation. All Rights Reserved.
+URL for more Information: http://www.adobe.com/go/font_vendor_id?ID=TMC&Name=Arial&PSName=ArialMT&applanguage=en_US-->
+<font-face font-family="Arial_Regular" units-per-em="2048" ascent="1854" descent="434"/>
+
+<glyph unicode="1" horiz-adv-x="1139" d="
+M 763 1472
+L 647 1472
+Q 600 1377 487 1276 374 1175 223 1104
+L 223 930
+Q 307 961 413 1023 518 1085 583 1147
+L 583 0 763 0 763 1472 Z"/>
+</font>
+</defs>
+
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#Layer1_0_FILL"/>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 36.3,22.65) ">
+<clipPath id="Mask_Mask_1">
+<rect x="-2" y="-2" width="31.45" height="58.75" fill="#FFFFFF" stroke="none"/>
+</clipPath>
+
+<text clip-path="url(#Mask_Mask_1)" writing-mode="lr"><tspan x="0" y="44.35" baseline-shift="0%" kerning="auto" font-family="Arial_Regular" font-size="49" fill="#000000" xml:space="preserve">1</tspan></text>
+</g>
+</svg>
